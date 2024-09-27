@@ -42,12 +42,12 @@ export default async function DashboardPage() {
         <h2 className="text-center">Mes événements</h2>
         <ul className="flex justify-center space-x-2">
           <li>
-            <Link href="/events/create" className="btn px-2 py-1 bg-yellow-600 border-yellow-800 border-2">
+            <Link href="/events/create" className="btn border-2 border-yellow-800 bg-yellow-600 px-2 py-1">
               Créer un événement
             </Link>
           </li>
           <li>
-            <Link href="/events" className="btn px-2 py-1 bg-blue-600 border-blue-800 border-2">
+            <Link href="/events" className="btn border-2 border-blue-800 bg-blue-600 px-2 py-1">
               Voir Mes événements
             </Link>
           </li>

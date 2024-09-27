@@ -15,18 +15,18 @@ export default async function DashboardEditPage( ) {
 
             {/* Prénom de l'utilisateur */}
             <div className="sm:col-span-2">
-              <label htmlFor="firstName" className="block mb-2 font-medium text-gray-900 dark:text-white">
+              <label htmlFor="firstName" className="mb-2 block font-medium text-gray-900 dark:text-white">
                 Prénom
               </label>
-              <input type="text" name="firstName" id="firstName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Prénom" defaultValue={session?.user.firstName} required />
+              <input type="text" name="firstName" id="firstName" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-yellow-600 focus:ring-yellow-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-yellow-500 dark:focus:ring-yellow-500" placeholder="Prénom" defaultValue={session?.user.firstName} required />
             </div>
 
             {/* Nom de l'utilisateur */}
             <div className="w-full">
-              <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="lastName" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                 Nom
               </label>
-              <input type="text" name="lastName" id="lastName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nom" defaultValue={session?.user.lastName} required />
+              <input type="text" name="lastName" id="lastName" className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-yellow-600 focus:ring-yellow-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-yellow-500 dark:focus:ring-yellow-500" placeholder="Nom" defaultValue={session?.user.lastName} required />
             </div>
 
 
@@ -37,11 +37,11 @@ export default async function DashboardEditPage( ) {
               </label>
               <div className="flex gap-4">
                 <div>
-                  <input type="radio" id="private" name="privacy" value="private" className="accent-primary-600" required />
+                  <input type="radio" id="private" name="privacy" value="private" className="accent-yellow-600" required />
                   <label htmlFor="private" className="ml-2 text-sm text-gray-900 dark:text-white">Privé</label>
                 </div>
                 <div>
-                  <input type="radio" id="public" name="privacy" value="public" className="accent-primary-600" required />
+                  <input type="radio" id="public" name="privacy" value="public" className="accent-yellow-600" required />
                   <label htmlFor="public" className="ml-2 text-sm text-gray-900 dark:text-white">Public</label>
                 </div>
               </div>
@@ -50,7 +50,7 @@ export default async function DashboardEditPage( ) {
           </div>
 
           <div className="flex justify-center">
-            <button type="submit" className="px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-950 rounded-lg hover:bg-blue-800">
+            <button type="submit" className="mt-4 rounded-lg bg-green-950 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 sm:mt-6">
                 Modifier mon profil
             </button>
           </div>
