@@ -4,6 +4,13 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
+
+// return true ou false si une requete d'ami existe
+export async function isFriendShip(userId: string, friendId: string)
+ const session = await auth();
+ 
+
+
 // Fonction pour envoyer une demande d'ami
 export async function sendFriendRequest(userId: string, friendId: string) {
   const session = await auth();
