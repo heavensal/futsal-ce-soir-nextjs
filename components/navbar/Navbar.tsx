@@ -94,7 +94,7 @@ export default function Navbar() {
             </li>
 
             <li className="off-canvas-menu-item my-2">
-              <Link href="/friends" onClick={toggleMenu} className="px-2 py-1 rounded-lg inline-block w-full duration-150 hover:bg-white hover:text-green-800">
+              <Link href="/dashboard/friends" onClick={toggleMenu} className="px-2 py-1 rounded-lg inline-block w-full duration-150 hover:bg-white hover:text-green-800">
                   Mes Amis
               </Link>
             </li>
