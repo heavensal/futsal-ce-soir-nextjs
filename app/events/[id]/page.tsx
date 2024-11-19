@@ -4,27 +4,14 @@ import { showEvent, destroyEvent } from "@/app/controllers/events/actions";
 import { createOrUpdateEventPlayer, destroyEventPlayer } from "@/app/controllers/events/eventPlayers/actions";
 import StartTime from "@/components/events/StartTime";
 
-
 import { useState, useEffect } from "react";
-
 
 interface Params {
   id: string;
 }
 
-
 export default function OneEventIDPage({ params }: { params: Params }) {
   const event = await showEvent(params.id);
-  // console.log(event);
-
-
-  // const [event, setEvent] = useState(null);
-
-  // useEffect(() => {
-  //   showEvent(params.id).then((event) => {
-  //     setEvent(event);
-  //   });
-  // }, [params.id]);
 
   return (
     <div>
@@ -57,19 +44,16 @@ export default function OneEventIDPage({ params }: { params: Params }) {
                 <td className="border">Statut</td>
                 <td className="border">{event?.privacy}</td>
               </tr>
-
             </tbody>
           </table>
         </div>
       </section>
 
       <section className="grid grid-cols-4 gap-x-2 gap-y-4 px-2" id="container-teams">
-
         <div className="col-span-2 rounded-lg border-2 border-blue-600 bg-blue-800" id="team-1">
           <h2 className="my-1 text-center text-xl">
             {event?.teams[0].name}
           </h2>
-
 
           <ul className="space-y-1 p-4 text-center">
             {event?.teams[0].players.map((player) => (
@@ -80,9 +64,12 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-1">
-              Rejoindre l&apos;équipe
-            </button>
+            <form action={createOrUpdateEventPlayer}>
+              <input type="hidden" name="teamId" value={event?.teams[0].id} />
+              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-1">
+                Rejoindre l&apos;équipe
+              </button>
+            </form>
           </div>
         </div>
 
@@ -97,16 +84,17 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-2">
-              Rejoindre l&apos;équipe
-            </button>
+            <form action={createOrUpdateEventPlayer}>
+              <input type="hidden" name="teamId" value={event?.teams[1].id} />
+              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-2">
+                Rejoindre l&apos;équipe
+              </button>
+            </form>
           </div>
         </div>
 
         <div className="col-span-2 col-start-2 rounded-lg border-2 border-gray-600 bg-gray-800" id="team-le-banc">
-
           <h2 className="my-1 text-center text-xl">{event?.teams[2].name}</h2>
-
           <ul className="space-y-1 p-4 text-center">
             {event?.teams[2].players.map((player) => (
               <li className="rounded-md bg-gray-600" key={player.id}>
@@ -116,13 +104,14 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-le-banc">
-              Rejoindre l&apos;équipe
-            </button>
+            <form action={createOrUpdateEventPlayer}>
+              <input type="hidden" name="teamId" value={event?.teams[2].id} />
+              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-le-banc">
+                Rejoindre l&apos;équipe
+              </button>
+            </form>
           </div>
-
         </div>
-
       </section>
 
       <form className="my-4 text-center"
@@ -134,8 +123,6 @@ export default function OneEventIDPage({ params }: { params: Params }) {
       }}>
         <button type="submit" className="rounded-md bg-red-700 px-4 py-2 transition duration-150 hover:bg-red-600">Supprimer l&apos;événement</button>
       </form>
-
-
     </div>
   );
 }
