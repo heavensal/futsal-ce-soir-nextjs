@@ -3,7 +3,6 @@
 import { showEvent, destroyEvent } from "@/app/controllers/events/actions";
 import { createOrUpdateEventPlayer, destroyEventPlayer } from "@/app/controllers/events/eventPlayers/actions";
 import StartTime from "@/components/events/StartTime";
-
 import { useState, useEffect } from "react";
 
 interface Params {
@@ -11,7 +10,25 @@ interface Params {
 }
 
 export default function OneEventIDPage({ params }: { params: Params }) {
-  const event = await showEvent(params.id);
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEvent() {
+      const eventData = await showEvent(params.id);
+      setEvent(eventData);
+      setLoading(false);
+    }
+    fetchEvent();
+  }, [params.id]);
+
+  async function handleJoinTeam(teamId) {
+    await createOrUpdateEventPlayer(params.id, new FormData().append("teamId", teamId));
+    const updatedEvent = await showEvent(params.id);
+    setEvent(updatedEvent);
+  }
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -64,12 +81,9 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <form action={createOrUpdateEventPlayer}>
-              <input type="hidden" name="teamId" value={event?.teams[0].id} />
-              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-1">
-                Rejoindre l&apos;équipe
-              </button>
-            </form>
+            <button onClick={() => handleJoinTeam(event?.teams[0].id)} className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-1">
+              Rejoindre l&apos;équipe
+            </button>
           </div>
         </div>
 
@@ -84,12 +98,9 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <form action={createOrUpdateEventPlayer}>
-              <input type="hidden" name="teamId" value={event?.teams[1].id} />
-              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-2">
-                Rejoindre l&apos;équipe
-              </button>
-            </form>
+            <button onClick={() => handleJoinTeam(event?.teams[1].id)} className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-2">
+              Rejoindre l&apos;équipe
+            </button>
           </div>
         </div>
 
@@ -104,19 +115,16 @@ export default function OneEventIDPage({ params }: { params: Params }) {
           </ul>
 
           <div className="mb-1 text-center">
-            <form action={createOrUpdateEventPlayer}>
-              <input type="hidden" name="teamId" value={event?.teams[2].id} />
-              <button type="submit" className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-le-banc">
-                Rejoindre l&apos;équipe
-              </button>
-            </form>
+            <button onClick={() => handleJoinTeam(event?.teams[2].id)} className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-le-banc">
+              Rejoindre l&apos;équipe
+            </button>
           </div>
         </div>
       </section>
 
       <form className="my-4 text-center"
-      action={async () => {
-        "use server";
+      onSubmit={async (e) => {
+        e.preventDefault();
         if (event?.id) {
           await destroyEvent(event.id);
         }
