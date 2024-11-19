@@ -1,8 +1,11 @@
-// "use client"
+"use client"
 
 import { showEvent, destroyEvent } from "@/app/controllers/events/actions";
+import { createOrUpdateEventPlayer, destroyEventPlayer } from "@/app/controllers/events/eventPlayers/actions";
 import StartTime from "@/components/events/StartTime";
-// import { useState, useEffect } from "react";
+
+
+import { useState, useEffect } from "react";
 
 
 interface Params {
@@ -10,7 +13,7 @@ interface Params {
 }
 
 
-export default async function OneEventIDPage({ params }: { params: Params }) {
+export default function OneEventIDPage({ params }: { params: Params }) {
   const event = await showEvent(params.id);
   // console.log(event);
 
@@ -25,13 +28,13 @@ export default async function OneEventIDPage({ params }: { params: Params }) {
 
   return (
     <div>
-      <h1 className="font-sans text-2xl text-center my-4">
+      <h1 className="my-4 text-center font-sans text-2xl">
         {event?.title} par {event?.creator?.name}
       </h1>
 
-      <section className="container container-infoEvent px-2 mx-auto mb-4">
+      <section className="container mx-auto mb-4 px-2" id="container-infoEvent">
         <div>
-          <table className="w-full text-center bg-green-800 rounded-lg">
+          <table className="w-full rounded-lg bg-green-800 text-center">
             <tbody>
               <tr className="bg-green-700">
                 <td className="border">Date</td>
@@ -60,60 +63,60 @@ export default async function OneEventIDPage({ params }: { params: Params }) {
         </div>
       </section>
 
-      <section className="container-teams grid grid-cols-4 gap-x-2 gap-y-4 px-2">
+      <section className="grid grid-cols-4 gap-x-2 gap-y-4 px-2" id="container-teams">
 
-        <div className="team-1 bg-blue-800 border-2 border-blue-600 rounded-lg col-span-2">
-          <h2 className="text-center text-xl my-1">
+        <div className="col-span-2 rounded-lg border-2 border-blue-600 bg-blue-800" id="team-1">
+          <h2 className="my-1 text-center text-xl">
             {event?.teams[0].name}
           </h2>
 
 
-          <ul className="text-center p-4 space-y-1">
+          <ul className="space-y-1 p-4 text-center">
             {event?.teams[0].players.map((player) => (
-              <li className="bg-blue-600 rounded-md" key={player.id}>
+              <li className="rounded-md bg-blue-600" key={player.id}>
                 <p>{player.player.name}</p>
               </li>
             ))}
           </ul>
 
-          <div className="text-center mb-1">
-            <button className="btn-join-team px-2 py-1 bg-yellow-600 border-yellow-800 border-2">
+          <div className="mb-1 text-center">
+            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-1">
               Rejoindre l&apos;équipe
             </button>
           </div>
         </div>
 
-        <div className="team-2 bg-red-800 border-2 border-red-600 rounded-lg col-span-2">
-          <h2 className="text-center text-xl my-1">{event?.teams[1].name}</h2>
-          <ul className="text-center p-4 space-y-1">
+        <div className="col-span-2 rounded-lg border-2 border-red-600 bg-red-800" id="team-2">
+          <h2 className="my-1 text-center text-xl">{event?.teams[1].name}</h2>
+          <ul className="space-y-1 p-4 text-center">
             {event?.teams[1].players.map((player) => (
-              <li className="bg-red-600 rounded-md" key={player.id}>
+              <li className="rounded-md bg-red-600" key={player.id}>
                 <p>{player.player.name}</p>
               </li>
             ))}
           </ul>
 
-          <div className="text-center mb-1">
-            <button className="btn-join-team px-2 py-1 bg-yellow-600 border-yellow-800 border-2">
+          <div className="mb-1 text-center">
+            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-team-2">
               Rejoindre l&apos;équipe
             </button>
           </div>
         </div>
 
-        <div className="team-le-banc bg-gray-800 border-2 border-gray-600 rounded-lg col-start-2 col-span-2">
+        <div className="col-span-2 col-start-2 rounded-lg border-2 border-gray-600 bg-gray-800" id="team-le-banc">
 
-          <h2 className="text-center text-xl my-1">{event?.teams[2].name}</h2>
+          <h2 className="my-1 text-center text-xl">{event?.teams[2].name}</h2>
 
-          <ul className="text-center p-4 space-y-1">
+          <ul className="space-y-1 p-4 text-center">
             {event?.teams[2].players.map((player) => (
-              <li className="bg-gray-600 rounded-md" key={player.id}>
+              <li className="rounded-md bg-gray-600" key={player.id}>
                 <p>{player.player.name}</p>
               </li>
             ))}
           </ul>
 
-          <div className="text-center mb-1">
-            <button className="btn-join-team px-2 py-1 bg-yellow-600 border-yellow-800 border-2">
+          <div className="mb-1 text-center">
+            <button className="border-2 border-yellow-800 bg-yellow-600 px-2 py-1" id="btn-join-le-banc">
               Rejoindre l&apos;équipe
             </button>
           </div>
@@ -122,16 +125,15 @@ export default async function OneEventIDPage({ params }: { params: Params }) {
 
       </section>
 
-      <form className="text-center my-4"
+      <form className="my-4 text-center"
       action={async () => {
         "use server";
         if (event?.id) {
           await destroyEvent(event.id);
         }
-      }}
-    >
-      <button type="submit" className="bg-red-700 py-2 px-4 rounded-md hover:bg-red-600 transition duration-150">Supprimer l&apos;événement</button>
-    </form>
+      }}>
+        <button type="submit" className="rounded-md bg-red-700 px-4 py-2 transition duration-150 hover:bg-red-600">Supprimer l&apos;événement</button>
+      </form>
 
 
     </div>

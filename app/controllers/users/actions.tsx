@@ -5,16 +5,16 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 // Fonction pour vérifier les collisions de username
-async function generateUniqueUsername(firstName: string): Promise<string> {
-  let username;
+async function generateUniqueUsername(firstName: string | null): Promise<string> {
+  let username: string = "";
   let isUnique = false;
 
   while (!isUnique) {
     const num = Math.floor(Math.random() * 9999);
-    username = `${firstName}#${num}` || `user${num}`;
+    username = `${firstName}#${num}`;
 
     // Vérifiez si le username existe déjà dans la base de données
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.user.findFirst({
       where: { username: username }
     });
 
@@ -33,7 +33,10 @@ export async function updateUser(id: string, formData: FormData) {
     throw new Error("You must be authenticated to update a user");
   }
 
-  const firstName = formData.get("firstName") as string;
+  const firstName = formData.get("firstName") as string | null;
+  if (!firstName) {
+    throw new Error("First name is required");
+  }
   const lastName = formData.get("lastName") as string;
 
   // Générer un username unique

@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="fr">
 
       <body
-        className={`${quicksand.variable} bg-lime-800 font-sans overflow-x-hidden`}
+        className={`${quicksand.variable} overflow-x-hidden bg-lime-800 font-sans`}
       >
         <SessionProvider>
           <Navbar />

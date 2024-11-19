@@ -6,9 +6,27 @@ import { redirect } from "next/navigation";
 
 
 // return true ou false si une requete d'ami existe
-export async function isFriendShip(userId: string, friendId: string)
+export async function isFriendShip(userId: string, friendId: string) {
  const session = await auth();
- 
+
+    if (!session) {
+      throw new Error("You must be authenticated to check if a friendship exists");
+    }
+
+    // Vérifiez si la demande d'ami existe déjà
+    const existingFriendship = await prisma.friendship.findUnique({
+      where: {
+        friendId_friendOfId: {
+          friendId: friendId,
+          friendOfId: userId
+        }
+      }
+    });
+
+    return !!existingFriendship;
+  }
+
+
 
 
 // Fonction pour envoyer une demande d'ami
